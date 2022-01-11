@@ -1,28 +1,43 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <Header/>
+    <b-container >
+      <Card :getMoedaSelecionada="getMoedaSelecionada"
+            :formatarMoeda="formatarMoeda" />
+      <Form :moedaSelecionada="moedaSelecionada.code"
+            :cotacaoReal="Number(moedaSelecionada.ask)"
+            :formatarMoeda="formatarMoeda" />
+    </b-container>    
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Header from './components/Header.vue';
+import Card from './components/Card.vue';
+import Form from './components/Form.vue';
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    Header,
+    Card,
+    Form
+  },
+  data: function () {
+    return {
+      moedaSelecionada: "",
+    };
+  },
+  methods: {
+    getMoedaSelecionada: function (moedaSelecionada) {
+      this.moedaSelecionada = moedaSelecionada;
+    },
+    formatarMoeda: function(moedaParaFormatar) {
+      return parseFloat(moedaParaFormatar).toFixed(2).replace('.', ',');
+    }
+  },
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
